@@ -83,8 +83,12 @@ boolean PubSubClient::connect(char *id, char* willTopic, uint8_t willQos, uint8_
 }
 
 uint8_t PubSubClient::readByte() {
-   while(!_client->available()) {}
+//   Serial.println("readByte: start");
+   long timer = millis() + 100;
+   while((!_client->available()) && timer > millis()) {}
+//   Serial.println("readByte: end");
    return _client->read();
+
 }
 
 uint16_t PubSubClient::readPacket() {
